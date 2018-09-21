@@ -1,0 +1,75 @@
+ @font-face {
+        src: url(/assets/fonts/aniron/anirb___.ttf);
+        font-family: "ani";
+        text-align: center;
+    }
+@font-face {
+    src: url(/assets/fonts/ringbearer/RINGM___.TTF);
+    font-family: "ring-bearer";
+    font-size: 70px;
+    text-align: center;
+}
+
+body {
+    background-image: url("https://images3.alphacoders.com/271/thumb-1920-271235.jpg");
+    width:100%;
+    height:auto; 
+   
+}
+
+* {
+  box-sizing: border-box;
+  text-align: center;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+
+.header {
+    position: static;    
+    font-family: "ring-bearer";
+    text-align: center;
+    margin-bottom: 100px;
+    color: gold;  
+}
+
+img {
+    width: 300px;
+    height:300px;
+}
+
+span {
+ font-weight: bolder;
+ margin-bottom: 20px;   
+}
+
+.container { 
+    font-family: "ani";
+    text-align: center;
+    background: goldenrod;
+    opacity: 0.8;
+    filter: alpha(opacity=60);
+    font-size-adjust: 12px;
+    margin: 50%, 10%, 50%, 10%;
+    padding:30px;
+    width: 800px;
+    height: 600px;
+    overflow: auto;
+}
+
+
+
+.card-body {
+    display: inline-block;
+    text-align: center;
+    color: rgb(85, 121, 15);
+    font-weight: 100%;
+   
+}
+
+
+.row {
+    margin: 20px;
+    font: 16px;
+}

@@ -1,0 +1,45 @@
+.split() - is used to split a string into an array of substrings, and returns the new array.
+
+.indexOf() - to search and retrieve instances of values within an array
+remember 
+    - that this will return -1 if the occurence is not found
+    - this function is case senstive
+
+    ex. var str = "Hello world, welcome to the universe.";
+        var n = str.indexOf("e");
+
+document.write( ) -used to directly write to the HTML page itself 
+
+.charAt() - returns the character at the specified index in a string
+var str = "HELLO WORLD";
+var res = str.charAt(str.length-1); --> Return the last character of a string
+The index of the last character is -1, the second last character is -2, and so on (See Example below).
+The index of the last character is -1, the second last character is -2, and so on (See Example below).
+
+Note: Don’t use “document.write” as it will delete the contents of your page including your Javascript. Use “document.querySelector” or “document.getElementById”, alongside either “innerHTML” or “textcontent”, to write to the DOM
+
+
+
+important syntax
+
+if/else statements
+
+if (condition/variable){
+    [then] function;
+    [then] console;
+    [then]wuteva;
+} 
+else OR else if (condition) {
+    [then] function;
+    [then] console;
+    [then]wuteva;
+};
+
+for loop
+
+for (var i = 0; i < arrayNAme.length; i++ ) {
+    code between the brackets repeats each time the iterator is smaller than the condition ex:
+    console.log( "I love" + arrayName[i]);
+
+}
+
