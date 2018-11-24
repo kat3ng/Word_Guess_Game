@@ -1,20 +1,21 @@
 //choice character selections from one of the greatest epics of all time
 var lotrChar = [
-    "Gandalf the Grey",
-    "Saruman the White",
-    "Frodo Baggins",
-    "Bilbo Baggins",
-    "Peregrin Took",
-    "Meriadoc Brandybuck",
-    "Samwise Gamgee",
-    "Legolas Greenleaf",
-    "Arwen Undomiel",
+    "Gandalf",
+    "Saruman",
+    "Frodo",
+    "Bilbo",
+    "Pippin",
+    "Merry",
+    "Samwise",
+    "Legolas",
+    "Arwen",
     "Gimli",
     "Aragorn",
     "Borimir",
     "Treebeard",
     "Gollum",
-    "Sauron"
+    "Sauron",
+    "Galadriel"
 ];
 
 //array of letters. I saw this cool trick to make it a little 
@@ -25,66 +26,53 @@ console.log(alphabet);
 // creating variables to hold the wins/lives left. Wins start at 0. 
 //Number of guesses starts at 15.
 var wins = 0;
-var lossess = 0;
+var losses = 0;
 var guessCount = 0;
 
-
-var correctOrBlank = [];
-var wrongGuesses = [];
+var guesses = [];
 var hiddenWord = "";
-var hiddenWordArr = [];
-var underscores = 0;
+var displayWord = [];
+var wrongGuesses = [];
+
 
 
 
 // GAME LOGIC
 // function startGame
 function startGame() {
-    guessCount = 15;
-
-    //choose random word
-    hiddenWord = lotrChar[Math.floor(Math.random() * lotrChar.length)];
-    //take that word and break it up into an array
-
-    hiddenWordArr = hiddenWord.toLowerCase().split("");
-
-    underscores = hiddenWordArr.length;
-
-    correctOrBlank = [];
+    guessCount = 5;
+    guesses = [];
     wrongGuesses = [];
 
-    // convert hiddenWordArr to underscores
-    for (var i = 0; i < hiddenWordArr.length; i++) {
-        correctOrBlank.push("_");
-    }
-    console.log(`Guess Count: ${guessCount}\nHidden Word: ${hiddenWord}\nHidden Letters: ${hiddenWordArr}\nCustomer Facing: ${correctOrBlank} \n`);
+    //choose random word
+    hiddenWord = lotrChar[Math.floor(Math.random() * lotrChar.length)].toLowerCase();
+    //take that word and break it up into an array
+
+    displayWord = hiddenWord.split("").map(letter => {
+        return "_"
+    });
+
+    console.log(`Guess Count: ${guessCount}\nHidden Word: ${hiddenWord}\nHidden Letters: ${displayWord}\nWrong Guesses: ${wrongGuesses}\nGuesses: ${guesses}`);
 
     // Display the blanks of the guess word on the DOM
-    document.getElementById("underscores").innerHTML = correctOrBlank.join(" ");
+    document.getElementById("underscores").textContent = displayWord.join(" ");
 
     // Clear the wrong guesses from the previous round on the DOM
-    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
+    document.getElementById("wrong-guesses").textContent = wrongGuesses.join(" ");
 }
 
 // function check letters
 function checkLetters(userGuess) {
-    letterInWord = false;
-    for (var i = 0; i < hiddenWordArr.length; i++) {
+    var wrongGuesses = true;
+    for (var i = 0; i < displayWord.length; i++) {
         if (hiddenWord[i] === userGuess) {
-            letterInWord = true;
+            displayWord[i] = userGuess;
+            wrongGuesses = false;
         }
+
     }
-    if (letterInWord) {
-        for (var j = 0; j < hiddenWord.length; j++) {
-            if (hiddenWord[j] === userGuess) {
-                correctOrBlank[j] = userGuess;
-            }
-        }
-    } else {
-        wrongGuesses.push(userGuess);
-        guessCount--;
-    }
-    console.log(`Updated Hidden Word: ${correctOrBlank}\nWrong Guesses: ${wrongGuesses}\nGuess Count: ${guessCount}`);
+    console.log(`Guess Count: ${guessCount}\nUpdated Hidden Word: ${displayWord.join("")}\nWrong Guesses: ${wrongGuesses}\nGuesses: ${guesses}`);
+    return wrongGuesses;
 }
 
 
@@ -93,34 +81,34 @@ function checkLetters(userGuess) {
 function roundFinish() {
 
     // Log the wins, losses, and guesses to the console
-    console.log(`Wins: ${wins} | LossCount: ${lossess} | Guesses Left: ${guessCount}`);
+    console.log(`Wins: ${wins} | LossCount: ${losses} | Guesses Left: ${guessCount}`);
 
     // Update DOM with the number of guesses remaining
-    document.getElementById("guesses-remaining").innerHTML = guessCount;
+    document.getElementById("guesses-remaining").textContent = guessCount;
     // Update page with guesses and underscores
-    document.getElementById("underscores").innerHTML = correctOrBlank.join(" ");
+    document.getElementById("underscores").textContent = displayWord.join(" ");
     // Update wrong guesses to DOM
-    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
+    document.getElementById("wrong-guesses").textContent = wrongGuesses.join(" ");
 
     // If all the letters have been guessed
-    if (hiddenWordArr.toString() === correctOrBlank.toString()) {
+    if (displayWord.indexOf("_") === -1) {
         // increment wins and alert the user. Congrats!
         wins++;
         alert(`Congrats! You guessed ${hiddenWord}`);
 
         // Update the win counter and restart the game
-        document.getElementById("win-counter").innerHTML = wins;
+        document.getElementById("win-counter").textContent = wins;
         startGame();
     }
     // If the user runs out of hearts
-    else if (guessCount === 0) {
+    else if (guessCount <= 0) {
         // Add to the loss counter
         losses++;
         // Show an alert - oh noo!
         alert("Oh no! The word was " + hiddenWord + "! \n\nIt's dangerous to go alone...");
 
         // Update loss counter in the DOM
-        document.getElementById("loss-counter").innerHTML = losses;
+        document.getElementById("loss-counter").textContent = losses;
         // Restart the game
         startGame();
     }
@@ -132,15 +120,21 @@ startGame();
 // capture user entry
 document.onkeyup = function (event) {
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-
+    document.getElementById("directions").textContent = " ";
     // Check to see if the key pressed is a letter
-    for (var j = 0; j < alphabet.length; j++)
-        if (userGuess == alphabet[j]) {
-            // Check for correct guesses
-            checkLetters(userGuess);
-            // Move to the next round
-            roundFinish();
-        };
+    if (alphabet.indexOf(userGuess) === -1) {
+        return
+    };
+    if (guesses.indexOf(userGuess) === -1) {
+        guesses.push(userGuess);
+        // Check for correct guesses
+        if (checkLetters(userGuess)) {
+            wrongGuesses.push(userGuess);
+            guessCount--;
+        }
+    }
+    // Move to the next round
+    roundFinish();
     console.log(`User Guess: ${userGuess}`)
 
 };
