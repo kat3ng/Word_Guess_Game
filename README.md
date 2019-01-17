@@ -26,7 +26,7 @@ Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H).
 
 After the user wins/loses the game should automatically choose another word and make the user play it.
 
-
+ 
 ### Notes
 ---
 This was the first project that I ever did with Bootstrap. After looking at the code, I am sure I could do a lot more with it. I plan on revisiting this code again after the class ends.
